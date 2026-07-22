@@ -11,6 +11,16 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: join(__dirname, "."),
   },
+  images:{
+    remotePatterns:[
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        port: "" ,
+        pathname: "/**"
+      }
+    ]
+  }
 };
 
 export default nextConfig;
