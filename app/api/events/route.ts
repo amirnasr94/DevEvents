@@ -52,10 +52,7 @@ export async function POST(req: NextRequest) {
 export async function GET() {
   try {
     await connectDB();
-
     const events = await Event.find().sort({ createAt: -1 });
-    console.log(events);
-
     return NextResponse.json(
       { message: "Event Fetching Successfully.", events },
       { status: 200 },
