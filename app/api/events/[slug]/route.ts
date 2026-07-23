@@ -22,7 +22,7 @@ export async function GET(_req: NextRequest, { params }: RouteParams) {
       );
     }
 
-    const event: IEvent | null = Evens.findOne({
+    const event: IEvent | null = await Evens.findOne({
       slug: slug.trim().toLowerCase(),
     }).lean();
 
