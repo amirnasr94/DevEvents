@@ -1,4 +1,7 @@
 import EventBook from "@/components/EventBook";
+import EventCard from "@/components/EventCard";
+import { IEvent } from "@/database/event.model";
+import { getSimilarEventsBySlug } from "@/lib/actions/events.action";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
@@ -64,6 +67,7 @@ export async function generateMetadata({ params }: RouteParams) {
 }
 
 export default async function page({ params }: RouteParams) {
+  "use cache";
   const { slug } = await params;
   const response = await fetch(`${BASE_URL}/api/events/${slug}`);
   const { event } = await response.json();
@@ -71,6 +75,8 @@ export default async function page({ params }: RouteParams) {
   if (!event) {
     return notFound();
   }
+
+  const similarEvents: IEvent[] = await getSimilarEventsBySlug(slug);
 
   return (
     <section id="event">
@@ -119,12 +125,12 @@ export default async function page({ params }: RouteParams) {
               lable={event.audience}
             />
           </section>
-          <EventAgenda agendaItems={JSON.parse(event.agenda[0])} />
+          <EventAgenda agendaItems={event.agenda} />
           <section className="flex flex-col gap-2">
             <h2>About the Organizer</h2>
             <p>{event.organizer}</p>
           </section>
-          <EventTags tags={JSON.parse(event.tags[0])} />
+          <EventTags tags={event.tags} />
         </div>
         <aside className="booking">
           <div className="signup-card">
@@ -139,6 +145,23 @@ export default async function page({ params }: RouteParams) {
             <EventBook />
           </div>
         </aside>
+      </div>
+      <div className="flex w-full flex-col gap-4 pt-20">
+        <h2>Similar Events</h2>
+        <div className="events">
+          {similarEvents.length > 0 &&
+            similarEvents.map((similarEvent) => (
+              <EventCard
+                key={similarEvent.title}
+                slug={similarEvent.slug}
+                title={similarEvent.title}
+                image={similarEvent.image}
+                date={similarEvent.date}
+                time={similarEvent.time}
+                location={similarEvent.location}
+              />
+            ))}
+        </div>
       </div>
     </section>
   );
