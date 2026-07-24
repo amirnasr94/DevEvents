@@ -1,12 +1,20 @@
 import EventCard from "@/components/EventCard";
 import ExploreBtn from "@/components/ExploreBtn";
 import { type IEvent } from "@/database/event.model";
+import { notFound } from "next/navigation";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-
 export default async function Home() {
-  const response = await fetch(`${BASE_URL}/api/events`);
+  const response = await fetch(`${BASE_URL}/api/events`, {
+    next: {
+      tags: ["events"],
+    },
+  });
   const { events } = await response.json();
+
+  if (!events || !Array.isArray(events)) {
+    return notFound();
+  }
 
   return (
     <section>
