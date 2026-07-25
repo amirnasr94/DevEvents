@@ -142,7 +142,7 @@ export default async function page({ params }: RouteParams) {
             ) : (
               <p className="text-sm">Be the first to book your spot!</p>
             )}
-            <EventBook />
+            <EventBook eventId={event._id} slug={slug} />
           </div>
         </aside>
       </div>
