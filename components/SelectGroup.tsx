@@ -33,15 +33,15 @@ export default function SelectGroup({
       <select
         id={selectId}
         className={clsx(
-          "h-10 rounded-md border border-input-border bg-dark-200 px-2 text-input outline-none focus:border-primary",
+          "h-10 rounded-md border border-input-border bg-dark-200 px-2 text-input outline-none focus:outline-none",
           error && "border-red-500",
           className,
         )}
         {...props}
-        defaultValue={placeholder && "null"}
+        defaultValue={placeholder && ""}
       >
         {placeholder && (
-          <option value="null" className="hidden">
+          <option value="" className="hidden">
             {placeholder}
           </option>
         )}
