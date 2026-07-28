@@ -4,9 +4,10 @@ import { ChangeEvent, InputHTMLAttributes, useRef, useState } from "react";
 
 interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, "type"> {
   label: string;
+  error?: string;
 }
 
-export default function FileInput({ label, ...props }: Props) {
+export default function FileInput({ label, error, ...props }: Props) {
   const [fileName, setFileName] = useState<string | undefined>(undefined);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -20,7 +21,7 @@ export default function FileInput({ label, ...props }: Props) {
       <label>{label}</label>
       <button
         type="button"
-        className="border border-input-border bg-dark-200 rounded-md h-10 text-input px-2 w-full text-left"
+        className={`border border-input-border bg-dark-200 rounded-md h-10 text-input px-2 w-full text-left ${error && "border-red-500"}`}
         onClick={() => inputRef.current?.click()}
       >
         {fileName ?? "Upload image"}
@@ -33,6 +34,7 @@ export default function FileInput({ label, ...props }: Props) {
         onChange={handleChange}
         {...props}
       />
+      {error && <span className="text-sm text-red-500">{error}</span>}
     </div>
   );
 }
