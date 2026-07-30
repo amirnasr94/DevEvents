@@ -148,6 +148,15 @@
   select {
     @apply border border-input-border bg-dark-200 rounded-md h-[40] placeholder:text-placeholder text-input ps-2 focus:outline-none w-full;
   }
+  input[type="time"]::-webkit-calendar-picker-indicator {
+    display: none;
+  }
+
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
 }
 
 @layer components {
