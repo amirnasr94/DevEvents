@@ -4,6 +4,8 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import LightRays from "@/components/LightRays";
 import Navbar from "../components/Navbar";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
