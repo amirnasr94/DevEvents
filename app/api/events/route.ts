@@ -4,7 +4,7 @@ import connectDB from "@/lib/mongodb";
 import Event from "@/database/event.model";
 
 export async function POST(req: NextRequest) {
-  try {
+  try {    
     await connectDB();
     const formData = await req.formData();
     let event;
@@ -25,9 +25,6 @@ export async function POST(req: NextRequest) {
         { status: 400 },
       );
 
-    const tags = JSON.parse(formData.get("tags") as string);
-    const agenda = JSON.parse(formData.get("agenda") as string);
-
     const arrauBufer = await imageFile.arrayBuffer();
     const buffer = Buffer.from(arrauBufer);
 
@@ -42,7 +39,7 @@ export async function POST(req: NextRequest) {
 
     event.image = (uploadImageResult as { secure_url: string }).secure_url;
 
-    const createdEvent = await Event.create({ ...event, tags, agenda });
+    const createdEvent = await Event.create(event);
     return NextResponse.json(
       { message: "Event Created Successfully", event: createdEvent },
       { status: 201 },
