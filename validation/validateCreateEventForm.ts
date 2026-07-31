@@ -14,13 +14,19 @@ export const validateCreateEventForm = z.object({
 
   time: z.string().min(1, { error: "Time is required." }),
 
-  location: z
+  venue: z
     .string()
     .trim()
-    .min(1, { error: "Location is required." })
-    .max(200, { error: "Location must not exceed 200 characters." }),
+    .min(1, { error: "Venue is required." })
+    .max(200, { error: "Venue must not exceed 200 characters." }),
 
   mode: z.string().min(1, { error: "Please select an event mode." }),
+
+  audience: z
+    .string()
+    .trim()
+    .min(1, { error: "Audience is required." })
+    .max(100, { error: "Audience must not exceed 100 characters." }),
 
   image: z
     .instanceof(File, { error: "Please upload an image." })
@@ -34,6 +40,9 @@ export const validateCreateEventForm = z.object({
   tags: z
     .array(z.string().trim().min(1))
     .min(1, { error: "Please add at least one tag." }),
+  agenda: z
+    .array(z.string().trim().min(1))
+    .min(1, { error: "Please add at least one tag." }),
 
   description: z
     .string()
@@ -41,6 +50,20 @@ export const validateCreateEventForm = z.object({
     .min(10, { error: "Description must be at least 10 characters." })
     .max(1000, {
       error: "Description must not exceed 1000 characters.",
+    }),
+  overview: z
+    .string()
+    .trim()
+    .min(10, { error: "Overview must be at least 10 characters." })
+    .max(1000, {
+      error: "Overview must not exceed 1000 characters.",
+    }),
+  organizer: z
+    .string()
+    .trim()
+    .min(10, { error: "Organizer must be at least 10 characters." })
+    .max(1000, {
+      error: "Organizer must not exceed 1000 characters.",
     }),
 });
 
