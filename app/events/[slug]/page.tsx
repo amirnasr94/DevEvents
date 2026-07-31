@@ -112,7 +112,7 @@ export default async function page({ params }: RouteParams) {
             <EventDetailItem
               icon="/assets/icons/pin.svg"
               alt="pin"
-              lable={event.location}
+              lable={event.venue}
             />
             <EventDetailItem
               icon="/assets/icons/mode.svg"
@@ -125,12 +125,12 @@ export default async function page({ params }: RouteParams) {
               lable={event.audience}
             />
           </section>
-          <EventAgenda agendaItems={event.agenda} />
+          <EventAgenda agendaItems={event.agenda?.[0]?.split(",")} />
           <section className="flex flex-col gap-2">
             <h2>About the Organizer</h2>
             <p>{event.organizer}</p>
           </section>
-          <EventTags tags={event.tags} />
+          <EventTags tags={event.tags?.[0]?.split(",")} />
         </div>
         <aside className="booking">
           <div className="signup-card">
@@ -158,7 +158,7 @@ export default async function page({ params }: RouteParams) {
                 image={similarEvent.image}
                 date={similarEvent.date}
                 time={similarEvent.time}
-                location={similarEvent.location}
+                venue={similarEvent.venue}
               />
             ))}
         </div>

@@ -5,7 +5,7 @@ type Props = {
   title: string;
   image: string;
   slug: string;
-  location: string;
+  venue: string;
   date: string;
   time: string;
 };
@@ -14,7 +14,7 @@ export default function EventCard({
   title,
   image,
   slug,
-  location,
+  venue,
   date,
   time,
 }: Props) {
@@ -35,7 +35,7 @@ export default function EventCard({
           width={14}
           height={14}
         />
-        <p>{location}</p>
+        <p>{venue}</p>
       </div>
       <p className="title">{title}</p>
       <div className="datetime">
@@ -48,6 +48,7 @@ export default function EventCard({
           />
           <p>{date}</p>
         </div>
+        |
         <div>
           <Image
             src="/assets/icons/clock.svg"
@@ -60,4 +61,4 @@ export default function EventCard({
       </div>
     </Link>
   );
-} 
+}

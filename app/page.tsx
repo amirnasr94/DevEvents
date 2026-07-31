@@ -33,7 +33,7 @@ export default async function Home() {
               key={event.title}
               title={event.title}
               image={event.image}
-              location={event.location}
+              venue={event.venue}
               slug={event.slug}
               date={event.date}
               time={event.time}

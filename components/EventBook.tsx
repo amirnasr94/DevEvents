@@ -35,7 +35,7 @@ export default function EventBook({ eventId, slug }: Params) {
           <div>
             <label htmlFor="email">Email Address</label>
             <input
-              id="enail"
+              id="email"
               placeholder="Enter your email address"
               type="email"
               value={email}
