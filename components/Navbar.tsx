@@ -15,9 +15,9 @@ export default function Navbar() {
           <p>DevEvent</p>
         </Link>
         <ul>
-          <Link href="">Home</Link>
-          <Link href="">Events</Link>
-          <Link href="">Create Event</Link>
+          <Link href="/">Home</Link>
+          <Link href="/events">Events</Link>
+          <Link href="/events/create-event">Create Event</Link>
         </ul>
       </nav>
     </header>
