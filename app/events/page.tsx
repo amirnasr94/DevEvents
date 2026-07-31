@@ -1,3 +1,4 @@
+import DeleteBtn from "@/components/DeleteBtn";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -5,7 +6,11 @@ import { notFound } from "next/navigation";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export default async function page() {
-  const response = await fetch(`${BASE_URL}/api/events`);
+  const response = await fetch(`${BASE_URL}/api/events`, {
+    next: {
+      tags: ["events"],
+    },
+  });
   const { events } = await response.json();
 
   if (!events || !Array.isArray(events)) {
@@ -58,9 +63,13 @@ export default async function page() {
                       <button className="text-primary text-base font-semibold">
                         Edit
                       </button>
-                      <button className="text-white text-base font-semibold">
+                      {/* <button
+                        className="text-white text-base font-semibold"
+                        onClick={() => handleDeleteEvent(event.slug)}
+                      >
                         Delete
-                      </button>
+                      </button> */}
+                      <DeleteBtn slug={event.slug} />
                     </div>
                   </td>
                 </tr>

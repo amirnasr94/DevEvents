@@ -61,3 +61,53 @@ export async function GET(_req: NextRequest, { params }: RouteParams) {
     );
   }
 }
+
+export async function DELETE(_req: NextRequest, { params }: RouteParams) {
+  try {
+    await connectDB();
+    const { slug } = await params;
+    if (!slug || typeof slug !== "string" || slug.trim() === "") {
+      return NextResponse.json(
+        {
+          message: "Invalide or Missing slug Parameter",
+        },
+        { status: 400 },
+      );
+    }
+    const res = await Evens.deleteOne({
+      slug: slug.trim().toLowerCase(),
+    });
+
+    if (res.deletedCount === 0) {
+      return NextResponse.json(
+        { message: "Failed to delete event." },
+        { status: 400 },
+      );
+    }
+
+    return NextResponse.json(
+      { message: "Event deleted successfully." },
+      { status: 200 },
+    );
+  } catch (error) {
+    if (error instanceof Error) {
+      if (error.message.includes("MONGODB_URI")) {
+        return NextResponse.json(
+          {
+            message: "Database configuration Error",
+          },
+          { status: 500 },
+        );
+      }
+
+      return NextResponse.json(
+        { message: "Cannot delete Event" },
+        { status: 500 },
+      );
+    }
+    return NextResponse.json(
+      { message: "Accured an unexpected Error, Try Later!" },
+      { status: 500 },
+    );
+  }
+}
