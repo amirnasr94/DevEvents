@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import InputGroup from "./InputGroup";
-import { useState, type SyntheticEvent } from "react";
+import { useRef, useState, type SyntheticEvent } from "react";
 import SelectGroup from "./SelectGroup";
 import FileInput from "./FileInput";
 import Textarea from "./Textarea";
@@ -21,6 +21,8 @@ export default function EventForm() {
     [k in keyof CreateEventForm]?: string;
   }>({});
 
+  const formRef = useRef<HTMLFormElement | null>(null);
+
   async function handleSubmitForm(data: FormData) {
     try {
       const response = await fetch(`${BASE_URL}/api/events`, {
@@ -30,6 +32,7 @@ export default function EventForm() {
       if (!response.ok) {
         throw new Error("Failed to create event");
       }
+      formRef?.current?.reset();
     } catch (error) {
       console.log(error);
     }
@@ -74,102 +77,112 @@ export default function EventForm() {
       );
       setErrors(errors);
     }
-
-    console.log(Object.fromEntries(formData.entries()));
   }
 
   return (
-    <form className="space-y-5" onSubmit={submit}>
-      <InputGroup
-        label="Event Title"
-        name="title"
-        placeholder="Enter event title"
-        error={errors.title}
-      />
-      <DateInput label="Event Date" error={errors.date} />
-      <TimeInput
-        label="Event Time"
-        name="time"
-        placeholder="Select start time"
-        endComponent={
-          <Image src="/assets/icons/clock.svg" alt="" width={20} height={20} />
-        }
-        error={errors.time}
-      />
-      <InputGroup
-        label="Event Venue"
-        name="venue"
-        placeholder="Enter venue or online link"
-        endComponent={
-          <Image src="/assets/icons/pin.svg" alt="" width={20} height={20} />
-        }
-        error={errors.venue}
-      />
+    <form className="space-y-5" onSubmit={submit} ref={formRef}>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <InputGroup
+          label="Event Title"
+          name="title"
+          placeholder="Enter event title"
+          error={errors.title}
+        />
+        <DateInput label="Event Date" error={errors.date} />
+        <TimeInput
+          label="Event Time"
+          name="time"
+          placeholder="Select start time"
+          endComponent={
+            <Image
+              src="/assets/icons/clock.svg"
+              alt=""
+              width={20}
+              height={20}
+            />
+          }
+          error={errors.time}
+        />
+        <InputGroup
+          label="Event Venue"
+          name="venue"
+          placeholder="Enter venue or online link"
+          endComponent={
+            <Image src="/assets/icons/pin.svg" alt="" width={20} height={20} />
+          }
+          error={errors.venue}
+        />
 
-      <SelectGroup
-        label="Event Type"
-        name="mode"
-        placeholder="Select mode"
-        options={[
-          { label: "Online", value: "online" },
-          { label: "Offline", value: "offline" },
-          { label: "Hybrid", value: "hybrid" },
-        ]}
-        error={errors.mode}
-      />
-      <InputGroup
-        label="Event Audience"
-        name="audience"
-        placeholder="e.g: Developers, DevOps engineers..."
-        endComponent={
-          <Image
-            src="/assets/icons/audience.svg"
-            alt=""
-            width={20}
-            height={20}
-          />
-        }
-        error={errors.audience}
-      />
-      <FileInput
-        label="Event image / banner"
-        name="image"
-        error={errors.image}
-      />
-      <InputGroup
-        label="Tags"
-        id="tags"
-        name="tags"
-        placeholder="e.g: react, next, js"
-        error={errors.tags}
-      />
+        <SelectGroup
+          label="Event Type"
+          name="mode"
+          placeholder="Select mode"
+          options={[
+            { label: "Online", value: "online" },
+            { label: "Offline", value: "offline" },
+            { label: "Hybrid", value: "hybrid" },
+          ]}
+          error={errors.mode}
+        />
+        <InputGroup
+          label="Event Audience"
+          name="audience"
+          placeholder="e.g: Developers, DevOps engineers..."
+          endComponent={
+            <Image
+              src="/assets/icons/audience.svg"
+              alt=""
+              width={20}
+              height={20}
+            />
+          }
+          error={errors.audience}
+        />
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <FileInput
+          label="Event image / banner"
+          name="image"
+          error={errors.image}
+        />
+        <InputGroup
+          label="Tags"
+          id="tags"
+          name="tags"
+          placeholder="e.g: react, next, js"
+          error={errors.tags}
+        />
+      </div>
+
       <Textarea
         label="Event Agenda"
         name="agenda"
         placeholder="seprated itmes with ' , ' e.g: 09:30 AM – 10:30 AM | Opening Keynote: The Future of AI & Open Source,"
-        rows={7}
+        rows={6}
         error={errors.agenda}
-        about="asd"
       />
-      <Textarea
-        label="Event Description"
-        name="description"
-        placeholder="Briefly describe the event"
-        rows={4}
-        error={errors.description}
-      />
-      <Textarea
-        label="Event Overview"
-        name="overview"
-        placeholder="describe the event"
-        rows={7}
-        error={errors.overview}
-      />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <Textarea
+          label="Event Description"
+          name="description"
+          placeholder="Briefly describe the event"
+          rows={6}
+          error={errors.description}
+        />
+        <Textarea
+          label="Event Overview"
+          name="overview"
+          placeholder="describe the event"
+          rows={6}
+          error={errors.overview}
+        />
+      </div>
+
       <Textarea
         label="Event Organizer"
         name="organizer"
         placeholder="About the Organizer"
-        rows={5}
+        rows={6}
         error={errors.organizer}
       />
       <button
