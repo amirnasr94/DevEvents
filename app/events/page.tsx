@@ -60,9 +60,11 @@ export default async function page() {
                   <td>{400}</td>
                   <td>
                     <div className="flex gap-x-3">
-                      <button className="text-primary text-base font-semibold">
-                        Edit
-                      </button>
+                      <Link href={`/events/edit/${event.slug}`}>
+                        <button className="text-primary text-base font-semibold cursor-pointer">
+                          Edit
+                        </button>
+                      </Link>
                       <DeleteBtn slug={event.slug} />
                     </div>
                   </td>
