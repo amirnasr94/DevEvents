@@ -56,6 +56,7 @@ const EventTags = ({ tags }: { tags: string[] }) => {
 };
 
 export async function generateMetadata({ params }: RouteParams) {
+  "use cache";
   const { slug } = await params;
   const response = await fetch(`${BASE_URL}/api/events/${slug}`);
   const { event } = await response.json();
@@ -146,11 +147,11 @@ export default async function page({ params }: RouteParams) {
           </div>
         </aside>
       </div>
-      <div className="flex w-full flex-col gap-4 pt-20">
-        <h2>Similar Events</h2>
-        <div className="events">
-          {similarEvents.length > 0 &&
-            similarEvents.map((similarEvent) => (
+      {similarEvents.length > 0 && (
+        <div className="flex w-full flex-col gap-4 pt-20">
+          <h2>Similar Events</h2>
+          <div className="events">
+            {similarEvents.map((similarEvent) => (
               <EventCard
                 key={similarEvent.title}
                 slug={similarEvent.slug}
@@ -161,8 +162,9 @@ export default async function page({ params }: RouteParams) {
                 venue={similarEvent.venue}
               />
             ))}
+          </div>
         </div>
-      </div>
+      )}
     </section>
   );
 }
