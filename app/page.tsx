@@ -1,3 +1,4 @@
+import EmptyState from "@/components/EmptyState";
 import EventCard from "@/components/EventCard";
 import ExploreBtn from "@/components/ExploreBtn";
 import { type IEvent } from "@/database/event.model";
@@ -24,23 +25,29 @@ export default async function Home() {
       <p className="text-center mt-5">
         Hackathons, Meetups, and Conferences, All in One Place
       </p>
-      <ExploreBtn />
-      <div className="mt-20 space-y-7">
-        <h3>Featur Events</h3>
-        <ul className="events">
-          {events?.map((event: IEvent) => (
-            <EventCard
-              key={event.title}
-              title={event.title}
-              image={event.image}
-              venue={event.venue}
-              slug={event.slug}
-              date={event.date}
-              time={event.time}
-            />
-          ))}
-        </ul>
-      </div>
+      {!events.length ? (
+        <EmptyState link="/events/create-event" />
+      ) : (
+        <>
+          <ExploreBtn />
+          <div className="mt-20 space-y-7">
+            <h3>Featur Events</h3>
+            <ul id="events" className="events">
+              {events?.map((event: IEvent) => (
+                <EventCard
+                  key={event.title}
+                  title={event.title}
+                  image={event.image}
+                  venue={event.venue}
+                  slug={event.slug}
+                  date={event.date}
+                  time={event.time}
+                />
+              ))}
+            </ul>
+          </div>
+        </>
+      )}
     </section>
   );
 }

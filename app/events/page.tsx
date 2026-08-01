@@ -21,7 +21,7 @@ export default async function page() {
     <section>
       <div className="flex flex-col lg:flex-row gap-y-5 items-center justify-between">
         <h1>Event Managment</h1>
-        <Link href={""}>
+        <Link href={"/events/create-event"}>
           <button className="bg-primary hover:bg-primary/90 max-lg:w-full cursor-pointer items-center justify-center rounded-[6px] px-4 py-2.5 text-lg font-semibold text-black">
             Add New Event
           </button>
@@ -63,12 +63,6 @@ export default async function page() {
                       <button className="text-primary text-base font-semibold">
                         Edit
                       </button>
-                      {/* <button
-                        className="text-white text-base font-semibold"
-                        onClick={() => handleDeleteEvent(event.slug)}
-                      >
-                        Delete
-                      </button> */}
                       <DeleteBtn slug={event.slug} />
                     </div>
                   </td>

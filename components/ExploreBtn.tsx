@@ -9,7 +9,7 @@ export default function ExploreBtn() {
       className="mt-7 mx-auto"
       onClick={() => {}}
     >
-      <a href="#events">
+      <a href="#events" style={{ scrollBehavior: "smooth" }}>
         Explore Events
         <Image
           src="/assets/icons/arrow-down.svg"
